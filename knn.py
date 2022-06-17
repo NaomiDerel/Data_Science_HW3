@@ -82,5 +82,5 @@ class RegressionKNN(KNN):
             nearest_values = [self.y_trained[i] for i in nearest_points]
 
             mean_value = np.mean(nearest_values)
-            prd_labels.append(round(mean_value))
+            prd_labels.append((mean_value))
         return prd_labels

@@ -5,7 +5,7 @@ import numpy as np
 from data import load_data, get_folds, adjust_labels, add_noise
 from cross_validation import model_selection_cross_validation, cross_validation_score
 from knn import ClassificationKNN, RegressionKNN
-from evaluation import f1_score, rmse
+from evaluation import f1_score, rmse, visualize_results
 
 # from sklearn.metrics import f1_score
 
@@ -22,6 +22,8 @@ def main():
     np_data = add_noise(df_X.to_numpy())
 
     classification_results_np = model_selection_cross_validation(ClassificationKNN, k_list, np_data, y_true, folds, f1_score)
+    visualize_results(k_list, classification_results_np, "f1_score", "Classification" ,
+                      "Users\gurgu\OneDrive\Documents\GitHub\Data_Science_HW3\plots1.png")
 
     i = 0
     for k in k_list:
@@ -38,6 +40,8 @@ def main():
     np_data = add_noise(df_X.to_numpy())
 
     regression_results_np = model_selection_cross_validation(RegressionKNN, k_list, np_data, y_true, folds, rmse)
+    visualize_results(k_list, regression_results_np, "rmse", "regression",
+                      "Users\gurgu\OneDrive\Documents\GitHub\Data_Science_HW3\plots2.png")
 
     i = 0
     for k in k_list:

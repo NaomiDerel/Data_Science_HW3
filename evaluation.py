@@ -44,15 +44,11 @@ def rmse(y_true, y_pred):
 def visualize_results(k_list, scores, metric_name, title, path):
     """ plot a results graph of cross validation scores """
 
-    plt.scatter(k_list, scores)  # scatter plot of the first and second columns - the 2 features
 
-    # giving names to the axis and the whole graph
-    plt.xlabel("values of k")
-    plt.ylabel(metric_name)
     plt.title(title)
-
-    plt.show()  ## isn't needed, just for tests
-
-    plt.savefig(path, format="png")  # saving the files in pdf format with the given path
-
+    plt.xlabel("k")
+    plt.ylabel(metric_name)
+    plt.plot(k_list, scores[0])
+    plt.show()
+   # plt.savefig(path, format="png")
 

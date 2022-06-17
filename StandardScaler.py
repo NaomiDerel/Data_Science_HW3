@@ -1,6 +1,14 @@
 # StandardScaler
 import numpy as np
+import math
 
+
+def our_std_axis0(X):
+    l = np.shape(X)[0]
+    return np.std(X, axis=0) * (l) / (l-1)
+def our_std_axis1(X):
+    l = np.shape(X)[1]
+    return np.std(X, axis=1) * (l) / (l - 1)
 
 class StandardScaler:
 
@@ -9,10 +17,13 @@ class StandardScaler:
         self.mean = 0
         self.sd = 0
 
+
+
     def fit(self, X):
         """fit scaler by learning mean and standard deviation per feature """
         self.mean = X.mean(axis=0)
-        self.sd = np.std(X, axis=0)
+        self.sd = our_std_axis0(X)
+
 
     def transform(self, X):
         """transform X by learned mean and standard deviation, and return it """
