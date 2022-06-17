@@ -31,14 +31,11 @@ def load_data(path):
 
 def adjust_labels(y):
     """ adjust labels of season from {0,1,2,3} to {0,1} """
-
     new = []
-
     for i in y:
-        if (i == 0 or i == 1):
+        if i == 0 or i == 1:
             new.append(0)
-        elif (i == 2 or i == 3):
+        elif i == 2 or i == 3:
             new.append(1)
-
     return new
 

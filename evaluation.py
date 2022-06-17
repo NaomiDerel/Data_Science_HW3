@@ -1,4 +1,5 @@
 # evaluation.py
+import math
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -14,19 +15,13 @@ def f1_score(y_true, y_pred):
     FN = np.sum((y_true == 1) & (y_pred == 0))
     FP = np.sum((y_true == 0) & (y_pred == 1))
     TN = np.sum((y_true == 0) & (y_pred == 0))
-    print("tp: " + str(TP) + ", fn: " + str(FN) + ", fp: " + str(FP) + ", tn: " + str(TN))
+    # print("tp: " + str(TP) + ", fn: " + str(FN) + ", fp: " + str(FP) + ", tn: " + str(TN))
 
     recall = TP / (TP + FN)
-    print(recall)
     precision = TP / (TP + FP)
-    print(precision)
 
-    if recall == 0 and precision == 0:
-        f1_score_value = 0
-    else:
-        f1_score_value = (2 * recall * precision) / (recall + precision)
+    f1_score_value = (2 * recall * precision) / (recall + precision)
 
-    print(f1_score_value)
     return f1_score_value
 
 
@@ -40,7 +35,8 @@ def rmse(y_true, y_pred):
     temp_np = np.square(np.subtract(y_true, y_pred))
     sum = np.sum(temp_np)
 
-    RMSE = ((1 / n) * sum) ** 0.5
+    RMSE = math.sqrt((1/n) * sum)
+    # print(RMSE)
 
     return RMSE
 

@@ -19,7 +19,8 @@ class KNN:
     def fit(self, X_train, y_train):
         """ fit scaler and save X_train and y_train """
         self.X_trained = self.scaler.fit_transform(X_train)
-        self.y_trained = self.scaler.fit_transform(y_train)
+        # self.y_trained = self.scaler.fit_transform(y_train)
+        self.y_trained = y_train
 
     @abstractmethod
     def predict(self, X_test):
@@ -35,7 +36,7 @@ class KNN:
             temp.append(self.dist(x, point))
         temp = np.array(temp)
         indexes = np.argsort(temp)
-        return indexes[1:self.k + 1]
+        return indexes[0:self.k]
 
     @staticmethod
     def dist(x1, x2):
@@ -46,24 +47,6 @@ class KNN:
         return distance
 
 
-class RegressionKNN(KNN):
-
-    def __init__(self, k):
-        """ object instantiation, parent class instantiation"""
-        super().__init__(k)
-
-    def predict(self, X_test):
-        """ predict labels for X_test and return predicted labels """
-        prd_labels = []
-        for point in X_test:
-            nearest_points = self.neighbours_indices(point)
-            nearest_values = [self.y_trained[i] for i in nearest_points]
-            most_common = stats.mode(nearest_values, axis=None)[0][0]
-            prd_labels.append(most_common)
-
-        return prd_labels
-
-
 class ClassificationKNN(KNN):
 
     def __init__(self, k):
@@ -72,8 +55,28 @@ class ClassificationKNN(KNN):
 
     def predict(self, X_test):
         """ predict labels for X_test and return predicted labels """
+        X_test_fitted = self.scaler.transform(X_test)
         prd_labels = []
-        for point in X_test:
+        for point in X_test_fitted:
+            nearest_points = self.neighbours_indices(point)
+            nearest_values = [self.y_trained[i] for i in nearest_points]
+            most_common = stats.mode(nearest_values, axis=None)[0][0]
+            prd_labels.append(most_common)
+
+        return prd_labels
+
+
+class RegressionKNN(KNN):
+
+    def __init__(self, k):
+        """ object instantiation, parent class instantiation"""
+        super().__init__(k)
+
+    def predict(self, X_test):
+        """ predict labels for X_test and return predicted labels """
+        X_test_fitted = self.scaler.transform(X_test)
+        prd_labels = []
+        for point in X_test_fitted:
             nearest_points = self.neighbours_indices(point)
             nearest_points = np.array(nearest_points)
             nearest_values = [self.y_trained[i] for i in nearest_points]

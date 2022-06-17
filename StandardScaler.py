@@ -16,8 +16,8 @@ class StandardScaler:
 
     def transform(self, X):
         """transform X by learned mean and standard deviation, and return it """
-        new = (X - self.mean) / self.sd
-        return new
+        transformed = (X - self.mean) / self.sd
+        return transformed
 
     def fit_transform(self, X):
         """fit scaler by learning mean and standard deviation per feature, and then transform X """
