@@ -1,13 +1,10 @@
 import sys
-
 import numpy as np
 
 from data import load_data, get_folds, adjust_labels, add_noise
-from cross_validation import model_selection_cross_validation, cross_validation_score
+from cross_validation import model_selection_cross_validation
 from knn import ClassificationKNN, RegressionKNN
 from evaluation import f1_score, rmse, visualize_results
-
-# from sklearn.metrics import f1_score
 
 
 def main():
@@ -16,39 +13,37 @@ def main():
     folds = get_folds()
     k_list = [3, 5, 11, 25, 51, 75, 101]
 
-    print("Part1 - Classification")
-    y_true = np.array(adjust_labels(df["season"]))
-    df_X = df[["t1", "t2", "wind_speed", "hum"]]
-    np_data = add_noise(df_X.to_numpy())
-
-    classification_results_np = model_selection_cross_validation(ClassificationKNN, k_list, np_data, y_true, folds, f1_score)
-    visualize_results(k_list, classification_results_np, "f1_score", "Classification" ,
-                      "Users\gurgu\OneDrive\Documents\GitHub\Data_Science_HW3\plots1.png")
-
-    i = 0
-    for k in k_list:
-        print("k=" + str(k) +
-              ", mean score: " + "{:.4f}".format(classification_results_np[0][i]) +
-              ", std of scores: " + "{:.4f}".format(classification_results_np[1][i]))
-        i += 1
+    results = print_results(df, "Part1 - Classification", "season", True, ["t1", "t2", "wind_speed", "hum"],
+                            ClassificationKNN, k_list, folds, f1_score)
+    visualize_results(k_list, results, "F1_Score", "Classification", "plot1.png")
 
     print()
 
-    print("Part2 - Regression")
-    y_true = np.array(df["hum"])
-    df_X = df[["t1", "t2", "wind_speed"]]
+    results = print_results(df, "Part2 - Regression", "hum", False, ["t1", "t2", "wind_speed"],
+                            RegressionKNN, k_list, folds, rmse)
+    visualize_results(k_list, results, "RMSE", "Regression", "plot2.png")
+
+
+def print_results(df, title, label, adjustable, features, KNNType, k_list, folds, metric):
+    print(title)
+
+    if adjustable:
+        y_true = np.array(adjust_labels(df[label]))
+    else:
+        y_true = np.array(df[label])
+    df_X = df[features]
     np_data = add_noise(df_X.to_numpy())
 
-    regression_results_np = model_selection_cross_validation(RegressionKNN, k_list, np_data, y_true, folds, rmse)
-    visualize_results(k_list, regression_results_np, "rmse", "regression",
-                      "Users\gurgu\OneDrive\Documents\GitHub\Data_Science_HW3\plots2.png")
+    results = model_selection_cross_validation(KNNType, k_list, np_data, y_true, folds, metric)
 
     i = 0
     for k in k_list:
         print("k=" + str(k) +
-              ", mean score: " + "{:.4f}".format(regression_results_np[0][i]) +
-              ", std of scores: " + "{:.4f}".format(regression_results_np[1][i]))
+              ", mean score: " + "{:.4f}".format(results[0][i]) +
+              ", std of scores: " + "{:.4f}".format(results[1][i]))
         i += 1
+
+    return results
 
 
 if __name__ == '__main__':

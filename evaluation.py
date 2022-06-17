@@ -1,6 +1,3 @@
-# evaluation.py
-import math
-
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -15,7 +12,6 @@ def f1_score(y_true, y_pred):
     FN = np.sum((y_true == 1) & (y_pred == 0))
     FP = np.sum((y_true == 0) & (y_pred == 1))
     TN = np.sum((y_true == 0) & (y_pred == 0))
-    # print("tp: " + str(TP) + ", fn: " + str(FN) + ", fp: " + str(FP) + ", tn: " + str(TN))
 
     recall = TP / (TP + FN)
     precision = TP / (TP + FP)
@@ -35,20 +31,17 @@ def rmse(y_true, y_pred):
     temp_np = np.square(np.subtract(y_true, y_pred))
     sum = np.sum(temp_np)
 
-    RMSE = math.sqrt((1/n) * sum)
-    # print(RMSE)
+    RMSE = ((1/n) * sum) ** 0.5
 
     return RMSE
 
 
 def visualize_results(k_list, scores, metric_name, title, path):
     """ plot a results graph of cross validation scores """
-
-
     plt.title(title)
     plt.xlabel("k")
     plt.ylabel(metric_name)
     plt.plot(k_list, scores[0])
+    plt.savefig(path, format="png")
     plt.show()
-   # plt.savefig(path, format="png")
 

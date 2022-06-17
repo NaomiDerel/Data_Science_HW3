@@ -1,5 +1,3 @@
-# data.py
-
 import numpy as np
 from sklearn.model_selection import KFold
 import pandas as pd

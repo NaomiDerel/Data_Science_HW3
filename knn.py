@@ -1,12 +1,8 @@
-# knn.py
-
 import numpy as np
 from scipy import stats
 from abc import abstractmethod
 from StandardScaler import StandardScaler
 
-
-# from data import StandardScaler
 
 class KNN:
     def __init__(self, k):
@@ -30,7 +26,6 @@ class KNN:
     def neighbours_indices(self, x):
         """ for a given point x, find indices of k closest points in the training set """
         new_arr = self.X_trained
-        nearest_indices = []
         temp = []
         for point in new_arr:
             temp.append(self.dist(x, point))
@@ -82,5 +77,5 @@ class RegressionKNN(KNN):
             nearest_values = [self.y_trained[i] for i in nearest_points]
 
             mean_value = np.mean(nearest_values)
-            prd_labels.append((mean_value))
+            prd_labels.append(mean_value)
         return prd_labels
