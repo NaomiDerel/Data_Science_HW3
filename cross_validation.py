@@ -20,4 +20,4 @@ def model_selection_cross_validation(model, k_list, X, y, folds, metric):
         Evaluate each model by given metric. """
 
     np_array = np.array([cross_validation_score(model(k), X, y, folds, metric) for k in k_list])
-    return np.mean(np_array, axis=1), np.std(np_array, axis=1)
+    return np.mean(np_array, axis=1), np.std(np_array, axis=1, ddof=1)
