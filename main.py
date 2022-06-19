@@ -7,8 +7,10 @@ from knn import ClassificationKNN, RegressionKNN
 from evaluation import f1_score, rmse, visualize_results
 
 
-def main():
-    path = "london_sample_500.csv"
+def main(argv):
+    """ calculates and prints Classification and Regression according to requirements """
+    # path = "london_sample_500.csv"
+    path = argv[1]
     df = load_data(path)
     folds = get_folds()
     k_list = [3, 5, 11, 25, 51, 75, 101]
@@ -25,6 +27,7 @@ def main():
 
 
 def print_results(df, title, label, adjustable, features, KNNType, k_list, folds, metric):
+    """ prints mean and standard-deviation results for each k in k_list according to requirements """
     print(title)
 
     if adjustable:
@@ -47,4 +50,4 @@ def print_results(df, title, label, adjustable, features, KNNType, k_list, folds
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv)

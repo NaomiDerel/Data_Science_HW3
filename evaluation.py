@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 
 def f1_score(y_true, y_pred):
     """ returns f1_score of binary classification task with true labels y_true and predicted labels y_pred """
-
     y_true = np.array(y_true)
     y_pred = np.array(y_pred)
 
@@ -15,7 +14,6 @@ def f1_score(y_true, y_pred):
 
     recall = TP / (TP + FN)
     precision = TP / (TP + FP)
-
     f1_score_value = (2 * recall * precision) / (recall + precision)
 
     return f1_score_value
@@ -23,14 +21,12 @@ def f1_score(y_true, y_pred):
 
 def rmse(y_true, y_pred):
     """ returns RMSE of regression task with true labels y_true and predicted labels y_pred """
-
     y_true = np.array(y_true)
     y_pred = np.array(y_pred)
 
     n = y_true.shape[0]
     temp_np = np.square(np.subtract(y_true, y_pred))
     sum = np.sum(temp_np)
-
     RMSE = ((1/n) * sum) ** 0.5
 
     return RMSE

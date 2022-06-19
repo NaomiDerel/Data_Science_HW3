@@ -15,7 +15,6 @@ class KNN:
     def fit(self, X_train, y_train):
         """ fit scaler and save X_train and y_train """
         self.X_trained = self.scaler.fit_transform(X_train)
-        # self.y_trained = self.scaler.fit_transform(y_train)
         self.y_trained = y_train
 
     @abstractmethod
@@ -29,21 +28,20 @@ class KNN:
         temp = []
         for point in new_arr:
             temp.append(self.dist(x, point))
-        temp = np.array(temp)
-        indexes = np.argsort(temp)
+
+        indexes = np.argsort(np.array(temp))
         return indexes[0:self.k]
 
     @staticmethod
     def dist(x1, x2):
         """ returns Euclidean distance between x1 and x2 """
-        dist = np.square(np.subtract(x1, x2))  # subtracts the vectors x,y and squares each place in the result
-        dist_sum = np.sum(dist)  # numpy sum on all the places in the vector
-        distance = dist_sum ** 0.5  # square root of the sum
+        dist = np.square(np.subtract(x1, x2))
+        dist_sum = np.sum(dist)
+        distance = dist_sum ** 0.5
         return distance
 
 
 class ClassificationKNN(KNN):
-
     def __init__(self, k):
         """ object instantiation, parent class instantiation"""
         super().__init__(k)
@@ -57,12 +55,10 @@ class ClassificationKNN(KNN):
             nearest_values = [self.y_trained[i] for i in nearest_points]
             most_common = stats.mode(nearest_values, axis=None)[0][0]
             prd_labels.append(most_common)
-
         return prd_labels
 
 
 class RegressionKNN(KNN):
-
     def __init__(self, k):
         """ object instantiation, parent class instantiation"""
         super().__init__(k)
@@ -72,10 +68,7 @@ class RegressionKNN(KNN):
         X_test_fitted = self.scaler.transform(X_test)
         prd_labels = []
         for point in X_test_fitted:
-            nearest_points = self.neighbours_indices(point)
-            nearest_points = np.array(nearest_points)
+            nearest_points = np.array(self.neighbours_indices(point))
             nearest_values = [self.y_trained[i] for i in nearest_points]
-
-            mean_value = np.mean(nearest_values)
-            prd_labels.append(mean_value)
+            prd_labels.append(np.mean(nearest_values))
         return prd_labels
