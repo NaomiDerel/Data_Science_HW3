@@ -8,7 +8,11 @@ from evaluation import f1_score, rmse, visualize_results
 
 
 def main(argv):
-    """ calculates and prints Classification and Regression according to requirements """
+    """
+    calculates and prints Classification and Regression according to requirements.
+    :param argv: path to file
+    :return:
+    """
     # path = "london_sample_500.csv"
     path = argv[1]
     df = load_data(path)

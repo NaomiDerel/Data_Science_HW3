@@ -43,11 +43,15 @@ class KNN:
 
 class ClassificationKNN(KNN):
     def __init__(self, k):
-        """ object instantiation, parent class instantiation"""
+        """ object instantiation, parent class instantiation """
         super().__init__(k)
 
     def predict(self, X_test):
-        """ predict labels for X_test and return predicted labels """
+        """
+        predict labels for X_test and return predicted labels.
+        :param X_test:
+        :return:
+        """
         X_test_fitted = self.scaler.transform(X_test)
         prd_labels = []
         for point in X_test_fitted:
