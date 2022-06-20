@@ -10,8 +10,7 @@ from evaluation import f1_score, rmse, visualize_results
 def main(argv):
     """
     calculates and prints Classification and Regression according to requirements.
-    :param argv: path to file
-    :return:
+    :param argv: path to file.
     """
     # path = "london_sample_500.csv"
     path = argv[1]
@@ -31,7 +30,19 @@ def main(argv):
 
 
 def print_results(df, title, label, adjustable, features, KNNType, k_list, folds, metric):
-    """ prints mean and standard-deviation results for each k in k_list according to requirements """
+    """
+    prints mean and standard-deviation results for each k in k_list according to requirements.
+    :param df: full data frame
+    :param title: for each part
+    :param label: parameter to predict
+    :param adjustable: true if we should adjust the label, false otherwise
+    :param features: features in data to predict by
+    :param KNNType: classification or regression KNN model
+    :param k_list: k values to preform KNN by
+    :param folds: divided data into train and test data
+    :param metric: f1_score or rmse to calculate quality of predictions
+    :return: mean and std scores for each k
+    """
     print(title)
 
     if adjustable:

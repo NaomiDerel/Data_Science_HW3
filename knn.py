@@ -1,29 +1,44 @@
 import numpy as np
 from scipy import stats
 from abc import abstractmethod
-from StandardScaler import StandardScaler
+from data import StandardScaler
 
 
 class KNN:
     def __init__(self, k):
-        """ object instantiation, save k and define a scaler object """
+        """
+        object instantiation, save k and define a scaler object
+        :param k: k for KNN
+        """
         self.k = k
         self.scaler = StandardScaler()
         self.X_trained = 0
         self.y_trained = 0
 
     def fit(self, X_train, y_train):
-        """ fit scaler and save X_train and y_train """
+        """
+        fit scaler and save X_train and y_train
+        :param X_train: data to train on
+        :param y_train: labels of data to train on
+        """
         self.X_trained = self.scaler.fit_transform(X_train)
         self.y_trained = y_train
 
     @abstractmethod
     def predict(self, X_test):
-        """ predict labels for X_test and return predicted labels """
+        """
+        predict labels for X_test and return predicted labels
+        :param X_test: data to test on
+        :return: predicted labels
+        """
         pass
 
     def neighbours_indices(self, x):
-        """ for a given point x, find indices of k closest points in the training set """
+        """
+        for a given point x, find indices of k closest points in the training set
+        :param x: one point in data set
+        :return: k nearest neighbours to point x in train set
+        """
         new_arr = self.X_trained
         temp = []
         for point in new_arr:
@@ -34,7 +49,12 @@ class KNN:
 
     @staticmethod
     def dist(x1, x2):
-        """ returns Euclidean distance between x1 and x2 """
+        """
+        returns Euclidean distance between x1 and x2
+        :param x1: point in data
+        :param x2: point in data
+        :return: euclidean distance between x1 and x2
+        """
         dist = np.square(np.subtract(x1, x2))
         dist_sum = np.sum(dist)
         distance = dist_sum ** 0.5
@@ -43,14 +63,17 @@ class KNN:
 
 class ClassificationKNN(KNN):
     def __init__(self, k):
-        """ object instantiation, parent class instantiation """
+        """
+        object instantiation
+        :param k: k for KNN
+        """
         super().__init__(k)
 
     def predict(self, X_test):
         """
-        predict labels for X_test and return predicted labels.
-        :param X_test:
-        :return:
+        predict labels for X_test and return predicted labels
+        :param X_test: data to test on
+        :return: predicted labels
         """
         X_test_fitted = self.scaler.transform(X_test)
         prd_labels = []
@@ -64,11 +87,18 @@ class ClassificationKNN(KNN):
 
 class RegressionKNN(KNN):
     def __init__(self, k):
-        """ object instantiation, parent class instantiation"""
+        """
+        object instantiation
+        :param k: k for KNN
+        """
         super().__init__(k)
 
     def predict(self, X_test):
-        """ predict labels for X_test and return predicted labels """
+        """
+        predict labels for X_test and return predicted labels
+        :param X_test: data to test on
+        :return: predicted labels
+        """
         X_test_fitted = self.scaler.transform(X_test)
         prd_labels = []
         for point in X_test_fitted:

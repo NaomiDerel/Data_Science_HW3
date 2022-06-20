@@ -3,7 +3,12 @@ import matplotlib.pyplot as plt
 
 
 def f1_score(y_true, y_pred):
-    """ returns f1_score of binary classification task with true labels y_true and predicted labels y_pred """
+    """
+    returns f1_score of binary classification task with true labels y_true and predicted labels y_pred
+    :param y_true: true labels for test set
+    :param y_pred: predicted labels for train set
+    :return: f1_score_value
+    """
     y_true = np.array(y_true)
     y_pred = np.array(y_pred)
 
@@ -20,7 +25,12 @@ def f1_score(y_true, y_pred):
 
 
 def rmse(y_true, y_pred):
-    """ returns RMSE of regression task with true labels y_true and predicted labels y_pred """
+    """
+    returns RMSE of regression task with true labels y_true and predicted labels y_pred
+    :param y_true: true labels for test set
+    :param y_pred: predicted labels for train set
+    :return: rmse value
+    """
     y_true = np.array(y_true)
     y_pred = np.array(y_pred)
 
@@ -33,7 +43,14 @@ def rmse(y_true, y_pred):
 
 
 def visualize_results(k_list, scores, metric_name, title, path):
-    """ plot a results graph of cross validation scores """
+    """
+    plot a results graph of cross validation scores
+    :param k_list: k values to preform KNN by
+    :param scores: mean scores for each k
+    :param metric_name: f1_score or rmse
+    :param title: title for graph
+    :param path: path to save graph to
+    """
     plt.title(title)
     plt.xlabel("k")
     plt.ylabel(metric_name)
