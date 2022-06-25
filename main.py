@@ -20,7 +20,7 @@ def main(argv):
 
     results = print_results(df, "Part1 - Classification", "season", True, ["t1", "t2", "wind_speed", "hum"],
                             ClassificationKNN, k_list, folds, f1_score)
-    visualize_results(k_list, results, "F1_Score", "Classification", "plot1.png")
+    visualize_results(k_list, results, "f1_score", "Classification", "plot1.png")
 
     print()
 
